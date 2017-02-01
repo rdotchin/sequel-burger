@@ -1,26 +1,40 @@
 /*=======================Connect Node to MySQL==============================*/
 //require mysql npm package
-var mysql = require('mysql');
-var connection;
-//create connection to burgers_db set to variable named connection
-if(process.env.JAWSDB_URL) { 
-	connection = mysql.createConnection(process.env.JAWSDB_URL);
-} else{
-	var connection = mysql.createConnection({
-  			host     : 'localhost',
-  			user     : 'root',
-  			password : '',
-  			database : 'burgers_db'
-	});
-}
-
-
-//establish a connection
-connection.connect(function(err){
-	if(err){
-		console.log('error connection: ' + err.stack);
+var Sequelize = require("sequelize");
+//creates a sequilize object that connects to the mysql db by entering 'db_name', 'userName', 'password'
+var connection = new Sequelize("burgers_db", "root", "", {
+	host: "localhost",
+	dialect: 'mysql',
+	define: {
+		timestamps: false
 	}
-	console.log('connected to mysql as id ' + connection.threadId);
+});
+
+//create a model of the table for sequelize
+var Burgers = connection.define('burgers', {
+	burger_name: {
+		type: Sequelize.STRING,
+		unique: true,
+		allowNull: false
+	},
+	devoured: {
+		type: Sequelize.BOOLEAN,
+		default: 0
+	},
+	date: {
+		type: Sequelize.DATE,
+		default: 'CURRENT_TIMESTAMP'
+	}
+});
+
+
+//establish a connection, sync does not change the mysql table, pull row by id
+connection.sync({
+	logging: console.log
+}).then(function(){
+	Burgers.findById(4).then(function(burger){
+		console.log(burger.dataValues);
+	});
 });
 /*====================END Connect Node to MySQL==============================*/
 
