@@ -1,35 +1,71 @@
-/*setup a model for how to interface with the database*/
+var Sequelize = require('sequelize');
+var sequelize = require('../config/connection.js');
 
-//Import (require) sql query functions from orm.js
-var orm = require('./../config/orm.js');
+//create a model of the table for sequelize
+var Burgers = sequelize.define('burgers', {
+	//validate len will check if the title submitted will be between 6 and 15 letters
+	burger_name: {
+		type: Sequelize.STRING,
+		unique: true,
+		allowNull: false,
+		validate: {
+			len: {
+				args: [6, 15],
+				msg: 'Please enter a title wtih at least 6 chars but no more than 15'
+			}
+		}
+	},
+	devoured: {
+		type: Sequelize.BOOLEAN,
+		default: 0,
+	},
+	date: {
+		type: Sequelize.DATE,
+		default: Sequelize.literal('CURRENT_TIMESTAMP')
+	}
+},
+{
+	timestamps: false
+});
 
 
-/*=====================MODEL FOR HOW TO INTERFACE WITH THE DATABASE========================*/
+
 var burger = {
 	all: function(cb){
-		orm.selectAll('burgers', function(res){
-			cb(res);
-		})
+		Burgers.findAll({}).then(function(data){
+			for(var i = 0; i < data.length; i++){
+			console.log(data[i].dataValues);
+		}
+		cb(data);
+		}).catch(function(err){
+			console.log(err);
+		});
 	},
-
-	create: function(cols, burgerName, cb){
-		orm.insertOne('burgers', cols, burgerName, function(res){
-			cb(res);
-		})
+	create: function(name, cb){
+		Burgers.create({
+			burger_name: name,
+			devoured: 0
+		}).then(function(data){
+			//...
+		}).catch(function(err){
+			console.log(err);
+		});
 	},
-
-	update: function(objColVals, condition, cb){
-		orm.updateOne('burgers', objColVals, condition, function(res){
-			cb(res);
+	update: function(colVal, condition, cb){
+		Burgers.update({
+			devoured: condition
+		},
+		{
+			where: {id : colVal}
+		}).then(function(data){
+			//...
+		}).catch(function(err){
+			console.log(err);
 		})
 	}
-}
-/*=====================END MODEL FOR HOW TO INTERFACE WITH THE DATABASE========================*/
 
 
+};
 
 
-
-
-//export burger object to be required in burgers_controller.js
 module.exports = burger;
