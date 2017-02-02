@@ -10,7 +10,7 @@ var Burgers = sequelize.define('burgers', {
 		allowNull: false,
 		validate: {
 			len: {
-				args: [6, 15],
+				args: [6, 25],
 				msg: 'Please enter a title wtih at least 6 chars but no more than 15'
 			}
 		}
@@ -33,9 +33,6 @@ var Burgers = sequelize.define('burgers', {
 var burger = {
 	all: function(cb){
 		Burgers.findAll({}).then(function(data){
-			for(var i = 0; i < data.length; i++){
-			console.log(data[i].dataValues);
-		}
 		cb(data);
 		}).catch(function(err){
 			console.log(err);
@@ -46,7 +43,8 @@ var burger = {
 			burger_name: name,
 			devoured: 0
 		}).then(function(data){
-			//...
+			console.log("added burger");
+			cb();
 		}).catch(function(err){
 			console.log(err);
 		});
@@ -58,10 +56,10 @@ var burger = {
 		{
 			where: {id : colVal}
 		}).then(function(data){
-			//...
+			cb();
 		}).catch(function(err){
 			console.log(err);
-		})
+		});
 	}
 
 
