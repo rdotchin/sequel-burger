@@ -16,10 +16,8 @@
 						<li class="list-group-item">
 							{{this.id}}. {{this.burger_name}}
 
-							<div class="col-md-4" id="burgers-button-div">
-								<div class="burger-button">
-									<form action="index/update/{{this.id}}?_method=PUT" method="POST" class="button-size">
-										<select class="chosen-select" name="temp">
+							<form action="index/update/{{this.id}}?_method=PUT" method="POST" class="button-size">
+										<select class="chosen-select" id="dropdown" name="temp">
 											<option value></option>
 											<option value="rare">rare</option>
 											<option value="medium rare">medium rare</option>
@@ -29,9 +27,9 @@
 										</select>
 										<input type="hidden" name="devour" value="1">
 										<button type="submit">Devour It!</button>
-									</form>
-								</div>
-							</div>
+								</form>
+
+							
 						</li>
 					{{/unless}}
 				{{/each}}
