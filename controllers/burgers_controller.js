@@ -11,8 +11,9 @@ var db = require('../models');
 });*/
 
 router.get('/', function(req, res){
-	db.Burgers.findAll(/*{
-		include: [db.Temperatures]}*/).then(function(data){
+	db.Burgers.findAll({
+		/*include: [db.Temperatures]*/
+		}).then(function(data){
 		var hbsObject = { burgers: data};
 		res. render('index', hbsObject);
 		}).catch(function(err){

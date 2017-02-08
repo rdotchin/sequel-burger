@@ -6,7 +6,7 @@ var Burgers = sequelize.define('Burgers', {
 	//validate len will check if the title submitted will be between 6 and 15 letters
 	burger_name: {
 		type: DataTypes.STRING,
-		unique: true,
+		/*unique: true,*/
 		allowNull: false,
 		validate: {
 			len: {
@@ -20,13 +20,13 @@ var Burgers = sequelize.define('Burgers', {
 		defaultValue: 0,
 	},
 	date: {
-		type: DataTypes.DATE/*,
-		defaultValue: DataTypes.literal('CURRENT_TIMESTAMP')*/
+		type: DataTypes.DATE,
+		defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
 	}
 },
 {
 	timestamps: false
-},	{
+}/*,	{
 	classMethods: {
 		associate: function(models){
 			Burgers.belongsTo(models.Temperatures, {
@@ -36,6 +36,6 @@ var Burgers = sequelize.define('Burgers', {
 			});
 		}
 	}
-});
+}*/);
  return Burgers;
 };

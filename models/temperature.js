@@ -3,15 +3,17 @@ module.exports = function(sequelize, DataTypes){
 
 var Temperatures = sequelize.define('Temperatures', {
 	temp: DataTypes.STRING
-	}, {
+	}/*, 
+
+	{
 		classMethods: {
-			associates: function(models) {
+			associate: function(models) {
 				Temperatures.hasOne(models.Burgers, {
-					onDelete: "cascade"
+					
 				}); 
 			}
 		}
-	});
+	}*/);
 	return Temperatures;
 };
 
