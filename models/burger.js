@@ -17,11 +17,11 @@ var Burgers = sequelize.define('burgers', {
 	},
 	devoured: {
 		type: Sequelize.BOOLEAN,
-		default: 0,
+		defaultValue: 0,
 	},
 	date: {
 		type: Sequelize.DATE,
-		default: Sequelize.literal('CURRENT_TIMESTAMP')
+		defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
 	}
 },
 {
@@ -29,41 +29,4 @@ var Burgers = sequelize.define('burgers', {
 });
 
 
-
-var burger = {
-	all: function(cb){
-		Burgers.findAll({}).then(function(data){
-		cb(data);
-		}).catch(function(err){
-			console.log(err);
-		});
-	},
-	create: function(name, cb){
-		Burgers.create({
-			burger_name: name,
-			devoured: 0
-		}).then(function(data){
-			console.log("added burger");
-			cb();
-		}).catch(function(err){
-			console.log(err);
-		});
-	},
-	update: function(colVal, condition, cb){
-		Burgers.update({
-			devoured: condition
-		},
-		{
-			where: {id : colVal}
-		}).then(function(data){
-			cb();
-		}).catch(function(err){
-			console.log(err);
-		});
-	}
-
-
-};
-
-
-module.exports = burger;
+module.exports = Burgers;
