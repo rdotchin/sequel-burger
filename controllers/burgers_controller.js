@@ -30,6 +30,8 @@ router.post('/index/create', function(req, res){
 });
 
 router.put('/index/update/:id', function(req, res){
+	//somehow update temperature table using req.body.temp for the temp
+
 	Burgers.update({
 			devoured: 1
 		},

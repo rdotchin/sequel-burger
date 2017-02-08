@@ -15,11 +15,22 @@
 					{{#unless this.devoured}}
 						<li class="list-group-item">
 							{{this.id}}. {{this.burger_name}}
-							<div class="burger-button">
-								<form action="index/update/{{this.id}}?_method=PUT" method="POST" class="button-size">
-									<input type="hidden" name="devour" value="1">
-									<button type="submit">Devour It!</button>
-								</form>
+
+							<div class="col-md-4" id="burgers-button-div">
+								<div class="burger-button">
+									<form action="index/update/{{this.id}}?_method=PUT" method="POST" class="button-size">
+										<select class="chosen-select" name="temp">
+											<option value></option>
+											<option value="rare">rare</option>
+											<option value="medium rare">medium rare</option>
+											<option value="medium">medium</option>
+											<option value="medium well">medium well</option>
+											<option value="well done">well done</option>
+										</select>
+										<input type="hidden" name="devour" value="1">
+										<button type="submit">Devour It!</button>
+									</form>
+								</div>
 							</div>
 						</li>
 					{{/unless}}
@@ -34,7 +45,7 @@
 				{{#each burgers}}
 					{{#if this.devoured}}
 						<li class="list-group-item" id="eaten-burger-li">
-								{{this.id}}. {{this.burger_name}}
+								{{this.id}}. {{this.burger_name}} - {{this.temp}}
 						</li>
 					{{/if}}
 				{{/each}}
