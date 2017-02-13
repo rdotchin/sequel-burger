@@ -1,19 +1,24 @@
+/*==================================TEMPERATURES MODEL====================================*/
+
 module.exports = function(sequelize, DataTypes){
-//create a model of the customers table
-
 var Temperatures = sequelize.define('Temperatures', {
-	temp: DataTypes.STRING
-	}/*, 
-
+	burger_id: {
+		type: DataTypes.INTEGER
+	},
+	temp: {
+		type: DataTypes.STRING,
+		allowNull: false
+	}
+}, 
 	{
 		classMethods: {
 			associate: function(models) {
-				Temperatures.hasOne(models.Burgers, {
-					
+				Temperatures.belongsTo(models.Burgers, {
+					foreignKey: 'burger_id'
 				}); 
 			}
 		}
-	}*/);
+	});
 	return Temperatures;
 };
 

@@ -11,10 +11,10 @@ var db = require("./models");
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
 
-//override POST when having ?_method=DELETE
+
 app.use(methodOverride('_method'));
 
-// Parse application/x-www-form-urlencoded
+// Parse application
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //register a Handlebars view engine
@@ -28,7 +28,7 @@ app.use('/', routes);
 
 
 //syncing our sequlize models and then starting our express app
-db.sequelize.sync().then(function(){
+db.sequelize.sync(/*{force: true}*/).then(function(){
 	app.listen(PORT, function(){
 	console.log("listenning on http://localhost:" + PORT);
 });

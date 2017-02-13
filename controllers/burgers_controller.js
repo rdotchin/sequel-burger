@@ -1,27 +1,24 @@
 var express = require('express');
 var router = express.Router();
-/*var Burgers = require('./../models/burger.js');*/
 var db = require('../models');
 
 
 
 /*==================================EXPRESS ROUTES====================================*/
-/*router.get('/', function(req, res){
-	res.redirect('/index');
-});*/
-
 router.get('/', function(req, res){
+	//retrieve all data from burgers and the temp from the temperature table
 	db.Burgers.findAll({
-		/*include: [db.Temperatures]*/
+		include: [db.Temperatures]
 		}).then(function(data){
 		var hbsObject = { burgers: data};
-		res. render('index', hbsObject);
+		res.render('index', hbsObject);
 		}).catch(function(err){
 			console.log(err);
 		});
 });
 
 router.post('/index/create', function(req, res){
+	//create burger
 	db.Burgers.create({
 			burger_name: req.body.burger_name,
 		}).then(function(data){
@@ -33,11 +30,10 @@ router.post('/index/create', function(req, res){
 });
 
 router.put('/index/update/:id', function(req, res){
-	//somehow update temperature table using req.body.temp for the temp
-	console.log(req.body.temp);
-	console.log(typeof req.body.temp);
+	//update Temperatures table and burgers table
 	db.Temperatures.create({
-		temp: req.body.temp
+		temp: req.body.temp,
+		burger_id: req.params.id
 	}, {
 		where: {id : req.params.id}
 	}).then(function(data){
@@ -47,7 +43,8 @@ router.put('/index/update/:id', function(req, res){
 	});
 
 	db.Burgers.update({
-			devoured: 1
+			devoured: 1,
+			burger_id: req.params.id
 		},
 		{
 			where: {id : req.params.id}
